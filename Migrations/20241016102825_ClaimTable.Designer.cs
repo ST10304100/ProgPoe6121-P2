@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PROG_PART_2.Data;
 
@@ -11,9 +12,11 @@ using PROG_PART_2.Data;
 namespace PROG_PART_2.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241016102825_ClaimTable")]
+    partial class ClaimTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -287,7 +290,7 @@ namespace PROG_PART_2.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DocumentId"));
 
-                    b.Property<int>("ClaimId")
+                    b.Property<int?>("ClaimId")
                         .HasColumnType("int");
 
                     b.Property<string>("DocumentName")
@@ -388,13 +391,9 @@ namespace PROG_PART_2.Migrations
 
             modelBuilder.Entity("PROG_PART_2.Models.Document", b =>
                 {
-                    b.HasOne("PROG_PART_2.Models.Claim", "Claim")
+                    b.HasOne("PROG_PART_2.Models.Claim", null)
                         .WithMany("Documents")
-                        .HasForeignKey("ClaimId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Claim");
+                        .HasForeignKey("ClaimId");
                 });
 
             modelBuilder.Entity("PROG_PART_2.Models.Claim", b =>
