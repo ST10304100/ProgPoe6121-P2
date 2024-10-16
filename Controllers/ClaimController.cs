@@ -94,8 +94,8 @@ namespace PROG_PART_2.Controllers
                 }
 
                 await _databaseContext.SaveChangesAsync();
-                //TempData["SuccessMessage"] = "Claim submitted successfully!";
-                return RedirectToAction("Index", "Home");
+                TempData["SuccessMessage"] = "Claim submitted successfully!";
+                return RedirectToAction("Claims", "Lecturer");
             }
             return View(viewModel);
         }
