@@ -13,6 +13,11 @@ builder.Services.AddDbContext<ApplicationDBContext>(options =>
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDBContext>();
 
+//Added service for Authorization for Role based Access
+builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders()
+               .AddRoles<IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDBContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,5 +13,7 @@ namespace PROG_PART_2.Data
 
         public DbSet<Document> Documents { get; set; }
 
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
     }
 }
