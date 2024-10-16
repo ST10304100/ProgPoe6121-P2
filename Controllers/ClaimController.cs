@@ -100,7 +100,7 @@ namespace PROG_PART_2.Controllers
             return View(viewModel);
         }
 
-        public async Task<IActionResult> ViewClaims()
+        public async Task<IActionResult> ViewClaimStatus()
         {
             var currentUser = await _accountManager.GetUserAsync(User);
             var userClaims = _databaseContext.Claims
