@@ -1,41 +1,110 @@
-﻿@model PROG_PART_2.Models.ClaimViewModel
+﻿@model PROG_PART_2.Models.ClaimViewModel 
 
 @{
     ViewData["Title"] = "Submit Claim";
 }
 
 <div class="container-claims">
-    <h2>Submit Your Claim</h2>
+    <h2 class="claim-title">Submit Your Claim</h2>
 
     <form asp-action="Create" enctype="multipart/form-data" method="post">
         <div class="form-group">
-            <label asp-for="HoursWorked"></label>
+            <label asp-for="HoursWorked" class="form-label"></label>
             <input asp-for="HoursWorked" class="form-control" required />
             <span asp-validation-for="HoursWorked" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="HourlyRate"></label>
+            <label asp-for="HourlyRate" class="form-label"></label>
             <input asp-for="HourlyRate" class="form-control" required />
             <span asp-validation-for="HourlyRate" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="Notes"></label>
+            <label asp-for="Notes" class="form-label"></label>
             <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Add any additional notes..."></textarea>
             <span asp-validation-for="Notes" class="text-danger"></span>
         </div>
 
         <div class="form-group">
-            <label for="SupportingDocuments" style="@(ViewBag.InvalidFile != null && (bool)ViewBag.InvalidFile ? "color: red;" : "color: black;")">Supporting Documents (PDF only, max 15MB)</label>
+            <label for="SupportingDocuments" class="form-label" style="@(ViewBag.InvalidFile != null && (bool)ViewBag.InvalidFile ? "color: red;" : "color: #ffffff;")">
+                Supporting Documents (PDF only, max 15MB)
+            </label>
             <input type="file" name="SupportingDocuments" class="form-control" multiple required />
             <span asp-validation-for="SupportingDocuments" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn-claims btn-primary"><i class="fa-solid fa-upload"></i> Submit Claim</button>
+        <button type="submit" class="btn-claims"><i class="fa-solid fa-upload"></i> Submit Claim</button>
     </form>
 </div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    body {
+        background-color: #261132; /* Dark purple background */
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff; /* White text for better contrast */
+    }
+
+    .container-claims {
+        background-color: #534B58; /* Grey background for the form container */
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 600px;
+        margin: 50px auto;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .claim-title {
+        text-align: center;
+        color: #f1c40f; /* Yellow title */
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        color: #ffffff; /* White labels for better visibility */
+        font-weight: bold;
+    }
+
+    .form-control {
+        background-color: #261132; /* Dark purple input fields */
+        color: #ffffff; /* White text */
+        border: 1px solid #f1c40f; /* Yellow border */
+        padding: 10px;
+    }
+
+    .form-control:focus {
+        border-color: #f1c40f; /* Yellow focus */
+        box-shadow: 0 0 5px rgba(241, 196, 15, 0.5); /* Yellow glow on focus */
+    }
+
+    .btn-claims {
+        background-color: #f1c40f; /* Yellow button */
+        color: #261132; /* Dark purple text */
+        font-weight: bold;
+        padding: 12px 0;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-claims:hover {
+        background-color: #ffffff; /* White on hover */
+        color: #261132; /* Dark purple text */
+    }
+
+    .text-danger {
+        color: #ff6f61; /* Bright red for error messages */
+    }
+
+</style>

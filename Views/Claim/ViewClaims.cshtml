@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<PROG_PART_2.Models.Claim>
+
 @{
     ViewBag.Title = "Track Claim Status";
 
-    
     string GetStatusClass(string status)
     {
         return status switch
@@ -11,7 +11,7 @@
             "Rejected by Coordinator" => "rejected",
             "Rejected by Manager" => "rejected",
             "Pending" => "pending",
-            _ => "unknown" 
+            _ => "unknown"
         };
     }
 
@@ -23,13 +23,14 @@
             "Rejected by Coordinator" => "text-danger",
             "Rejected by Manager" => "text-danger",
             "Pending" => "text-warning",
-            _ => "text-muted" 
+            _ => "text-muted"
         };
     }
 }
 
 <div class="container-claims">
-    <h2">Track Your Claim Status</h2>
+    <h2 class="claim-status-title">Track Your Claim Status</h2>
+
     <!-- Status Summary Section -->
     <div class="status-summary">
         <div class="status-item approved">
@@ -43,9 +44,9 @@
         </div>
     </div>
 
-  
+    <!-- Filter Section -->
     <div class="filter-section">
-        <label for="status-filter">Filter by Status:</label>
+        <label for="status-filter" class="filter-label">Filter by Status:</label>
         <select id="status-filter" class="status-filter" onchange="filterClaims()">
             <option value="All">All</option>
             <option value="Approved">Approved</option>
@@ -54,8 +55,8 @@
         </select>
     </div>
 
- 
-    <table class="table">
+    <!-- Claims Table -->
+    <table class="table table-claims">
         <thead>
             <tr>
                 <th>Claim ID</th>
@@ -77,7 +78,7 @@
         </tbody>
     </table>
 
-    <a href="/Lecturer/Dashboard" class="btn-submit" style="text-decoration:none;"><i class="fa-solid fa-house"></i> Back to Dashboard</a>
+    <a href="/Lecturer/Dashboard" class="btn-submit"><i class="fa-solid fa-house"></i> Back to Dashboard</a>
 </div>
 
 <script>
@@ -98,3 +99,134 @@
         }
     }
 </script>
+
+<style>
+    body {
+        background-color: #261132; /* Dark purple background */
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff; /* White text */
+    }
+
+    .container-claims {
+        background-color: #534B58; /* Grey background for the form container */
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 900px;
+        margin: 50px auto;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .claim-status-title {
+        text-align: center;
+        color: #f1c40f; /* Yellow title */
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .status-summary {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+    }
+
+    .status-item {
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+
+    .status-item.approved {
+        background-color: #2ecc71; /* Green for approved */
+        color: #ffffff;
+    }
+
+    .status-item.rejected {
+        background-color: #e74c3c; /* Red for rejected */
+        color: #ffffff;
+    }
+
+    .status-item.pending {
+        background-color: #f1c40f; /* Yellow for pending */
+        color: #261132;
+    }
+
+    .filter-section {
+        margin-bottom: 20px;
+        text-align: right;
+    }
+
+    .filter-label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .status-filter {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #261132;
+        color: #ffffff;
+        border: 1px solid #f1c40f; /* Yellow border */
+    }
+
+    .table-claims {
+        width: 100%;
+        background-color: #261132; /* Dark purple table */
+        color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .table-claims th, .table-claims td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #534B58; /* Grey border */
+    }
+
+    .table-claims th {
+        background-color: #534B58; /* Grey table header */
+        color: #ffffff;
+    }
+
+    .table-claims tr:hover {
+        background-color: #f1c40f; /* Yellow row hover */
+        color: #261132; /* Dark text on hover */
+    }
+
+    .btn-submit {
+        display: inline-block;
+        background-color: #f1c40f; /* Yellow button */
+        color: #261132; /* Dark text */
+        padding: 12px 20px;
+        text-align: center;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        background-color: #ffffff; /* White hover */
+        color: #261132; /* Dark text */
+    }
+
+    .text-success {
+        color: #2ecc71; /* Green text for approved status */
+    }
+
+    .text-danger {
+        color: #e74c3c; /* Red text for rejected status */
+    }
+
+    .text-warning {
+        color: #f1c40f; /* Yellow text for pending status */
+    }
+
+    .text-muted {
+        color: #bdbdbd; /* Muted text for unknown status */
+    }
+
+
+</style>

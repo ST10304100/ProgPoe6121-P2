@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Track Claim Status";
 
-    // Helper methods to determine CSS classes based on status
     string GetStatusClass(string status)
     {
         return status switch
@@ -11,7 +10,7 @@
             "Rejected by Coordinator" => "rejected",
             "Rejected by Manager" => "rejected",
             "Pending" => "pending",
-            _ => "unknown" // Default class for any unexpected status
+            _ => "unknown"
         };
     }
 
@@ -23,14 +22,14 @@
             "Rejected by Coordinator" => "text-danger",
             "Rejected by Manager" => "text-danger",
             "Pending" => "text-warning",
-            _ => "text-muted" // Default text class
+            _ => "text-muted"
         };
     }
 }
 
 <div class="container-claims">
-    <h2 style="color: #03041c;">Track Your Claim Status</h2>
-    <!-- Status Summary Section -->
+    <h2 class="heading">Track Your Claim Status</h2>
+
     <div class="status-summary">
         <div class="status-item approved">
             Approved Claims: <span id="approved-count">@Model.Count(c => c.Status == "Approved by Manager")</span>
@@ -43,7 +42,6 @@
         </div>
     </div>
 
-   
     <div class="filter-section">
         <label for="status-filter">Filter by Status:</label>
         <select id="status-filter" class="status-filter" onchange="filterClaims()">
@@ -54,7 +52,6 @@
         </select>
     </div>
 
-    
     <table class="table">
         <thead>
             <tr>
@@ -77,7 +74,7 @@
         </tbody>
     </table>
 
-    <a href="/Lecturer/Dashboard" class="btn-submit" style="text-decoration:none;"><i class="fa-solid fa-house"></i> Back to Dashboard</a>
+    <a href="/Lecturer/Dashboard" class="btn-back"><i class="fa-solid fa-house"></i> Back to Dashboard</a>
 </div>
 
 <script>
@@ -91,10 +88,101 @@
             const status = row.getAttribute("data-status").toLowerCase();
 
             if (filterValue === "all" || status === filterValue) {
-                row.style.display = ""; // Show the row
+                row.style.display = "";
             } else {
-                row.style.display = "none"; // Hide the row
+                row.style.display = "none";
             }
         }
     }
 </script>
+
+<style>
+    .container-claims {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        color: #333;
+    }
+
+    .heading {
+        color: #261132;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .status-summary {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .status-item {
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        width: 30%;
+    }
+
+        .status-item.approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-item.rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-item.pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+    .filter-section {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .status-filter {
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .table {
+        width: 100%;
+        background-color: #fff;
+        border-radius: 10px;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #534B58;
+            color: #fff;
+        }
+
+    .btn-back {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #261132;
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-back:hover {
+            background-color: #3b2b59;
+        }
+</style>

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PROG_PART_2.Models.Claim>
 
 <div class="container-dashboard">
-    <h2>Lecturer Dashboard</h2>
+    <h2 class="heading">Lecturer Dashboard</h2>
 
     <div class="filter-section">
         <form method="get" class="filter-form">
@@ -9,7 +9,7 @@
             <input type="date" id="start-date" name="startDate" value="@Context.Request.Query["startDate"]" class="form-control" />
             <label for="end-date">End Date:</label>
             <input type="date" id="end-date" name="endDate" value="@Context.Request.Query["endDate"]" class="form-control" />
-            <button type="submit" class="btn-filter">Filter</button>
+            <button type="submit" class="btn-filter"><i class="fa-solid fa-filter"></i> Filter</button>
         </form>
     </div>
 
@@ -36,12 +36,12 @@
                     <td>
                         @if (claim.Documents != null && claim.Documents.Any())
                         {
-                            <ul style="list-style-type: none;">
+                            <ul class="document-list">
                                 @foreach (var doc in claim.Documents)
                                 {
                                     <li>
                                         <i class="fa-solid fa-download"></i>
-                                        <a href="@Url.Content("~/uploads/" + doc.DocumentName)" target="_blank" style="text-decoration: none; color: #212529;">View Document</a>
+                                        <a href="@Url.Content("~/uploads/" + doc.DocumentName)" target="_blank">View Document</a>
                                     </li>
                                 }
                             </ul>
@@ -64,3 +64,121 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .container-dashboard {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading {
+        color: #261132;
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .filter-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .filter-form {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-control {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+    .btn-filter {
+        background-color: #534B58;
+        color: #fff;
+        padding: 8px 12px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+        .btn-filter i {
+            margin-right: 5px;
+        }
+
+        .btn-filter:hover {
+            background-color: #261132;
+        }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .table-header th {
+        background-color: #261132;
+        color: #fff;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    .table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .document-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+        .document-list li {
+            margin: 5px 0;
+        }
+
+        .document-list a {
+            text-decoration: none;
+            color: #534B58;
+        }
+
+            .document-list a:hover {
+                color: #261132;
+            }
+
+    .action-section {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn-submit {
+        background-color: #261132;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-submit:hover {
+            background-color: #534B58;
+        }
+</style>
