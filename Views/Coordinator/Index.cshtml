@@ -6,10 +6,10 @@
 
 <body>
     <div class="container-claims">
-        <h2>Pending Claims for Programme Coordinator</h2>
+        <h2 class="heading">Pending Claims for Programme Coordinator</h2>
 
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-hover">
+            <thead class="table-header">
                 <tr>
                     <th>Claim ID</th>
                     <th>Submitted By</th>
@@ -34,12 +34,12 @@
                         <td>
                             @if (claim.Documents != null && claim.Documents.Any())
                             {
-                                <ul style="list-style-type: none; padding: 0;">
+                                <ul class="document-list">
                                     @foreach (var doc in claim.Documents)
                                     {
                                         <li>
                                             <i class="fa-solid fa-download"></i>
-                                            <a href="@Url.Content("~/uploads/" + doc.DocumentName)" target="_blank" style="text-decoration: none;" class="document-link">View Document</a>
+                                            <a href="@Url.Content("~/uploads/" + doc.DocumentName)" target="_blank" class="document-link">View Document</a>
                                         </li>
                                     }
                                 </ul>
@@ -52,13 +52,13 @@
                         <td>
                             <div class="action-buttons">
                                 <!-- Approve form -->
-                                <form asp-action="Approve" method="post">
+                                <form asp-action="Approve" method="post" class="form-action">
                                     <input type="hidden" name="claimId" value="@claim.ClaimId" />
                                     <input type="submit" value="Approve" class="btn btn-approve" />
                                 </form>
 
                                 <!-- Reject form -->
-                                <form asp-action="Reject" method="post" style="display:inline;">
+                                <form asp-action="Reject" method="post" class="form-action">
                                     <input type="hidden" name="claimId" value="@claim.ClaimId" />
                                     <input type="submit" value="Reject" class="btn btn-reject" />
                                 </form>
@@ -71,8 +71,115 @@
 
         @if (!Model.Any())
         {
-            <p>No pending claims to review at this time.</p>
+            <p class="no-claims-message">No pending claims to review at this time.</p>
         }
     </div>
 
 </body>
+
+<style>
+    .container-claims {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .heading {
+        text-align: center;
+        color: #261132;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .table-hover {
+        width: 100%;
+        background-color: #fff;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .table-header th {
+        background-color: #261132;
+        color: #fff;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    .table td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .document-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .document-list li {
+            margin: 5px 0;
+        }
+
+    .document-link {
+        text-decoration: none;
+        color: #534B58;
+        font-weight: bold;
+    }
+
+        .document-link:hover {
+            color: #261132;
+        }
+
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .form-action {
+        display: inline-block;
+        margin: 0;
+    }
+
+    .btn {
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-approve {
+        background-color: #261132;
+        color: #fff;
+    }
+
+        .btn-approve:hover {
+            background-color: #534B58;
+        }
+
+    .btn-reject {
+        background-color: #F44336;
+        color: #fff;
+    }
+
+        .btn-reject:hover {
+            background-color: #C62828;
+        }
+
+    .no-claims-message {
+        text-align: center;
+        font-size: 1.2rem;
+        color: #999;
+        margin-top: 20px;
+    }
+</style>
