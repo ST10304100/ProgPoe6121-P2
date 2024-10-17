@@ -51,8 +51,9 @@ namespace PROG_PART_2.Controllers
             bool invalidFileDetected = false;
             foreach (var file in viewModel.SupportingDocuments)
             {
-                if (file.ContentType != "application/pdf" || file.Length > 15 * 1024 * 1024) // Only allow PDF under 15 MB
-                {
+                if (!IsValidDocument(file))
+                // Only allow PDF under 15 MB
+                    {
                     ViewBag.FileError = true;
                     invalidFileDetected = true;
                     ModelState.AddModelError("", "Only PDF files under 15 MB are allowed.");
@@ -136,5 +137,21 @@ namespace PROG_PART_2.Controllers
             // Pass the claims to the view
             return View(userClaims);
         }
+
+        // Method to verify if the file is a PDF and under 15 MB - Used for Unit Testing - behaves like an if statement
+        public bool IsValidDocument(IFormFile file)
+        {
+            // Confirm the file is not null
+            if (file == null)
+            {
+                return false;
+            }
+
+            // Check if the file type is PDF and size is 15 MB or less
+            return file.ContentType == "application/pdf" && file.Length <= 15 * 1024 * 1024; // 15 MB
+        }
+
     }
+
+
 }
