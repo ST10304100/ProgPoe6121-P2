@@ -39,21 +39,30 @@
         <!-- Side Navigation -->
         <nav id="sidebar" class="bg-grey">
             <ul class="nav flex-column p-3">
-                <li class="nav-item mb-3">
-                    <a class="nav-link text-white" href="#">Dashboard</a>
-                </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link text-white" href="#">Submit Claims</a>
-                </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link text-white" href="#">Track Claims</a>
-                </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link text-white" href="#">Manage Users</a>
-                </li>
-                <li class="nav-item mb-3">
-                    <a class="nav-link text-white" href="#">Reports</a>
-                </li>
+                @if (User.IsInRole("Lecturer"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Lecturer" asp-action="Claims" style="color:#fff !important;"> Lecturer Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Claim" asp-action="Create" style="color:#fff !important;">Submit a Claim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Claim" asp-action="ViewClaimStatus" style="color:#fff !important;">Track Claims</a>
+                    </li>
+                }
+                else if (User.IsInRole("Coordinator"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Coordinator" asp-action="Index" style="color:#fff !important;"> Manage Claims</a>
+                    </li>
+                }
+                else if (User.IsInRole("Manager"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Manager" asp-action="Index" style="color:#fff !important;">Manage Claims</a>
+                    </li>
+                }
             </ul>
         </nav>
 

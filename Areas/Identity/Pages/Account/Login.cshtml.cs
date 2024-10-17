@@ -21,11 +21,13 @@ namespace PROG_PART_2.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, UserManager<IdentityUser> userManager)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -115,6 +117,29 @@ namespace PROG_PART_2.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+
+                    // Get the user by email
+                    var user = await _userManager.FindByEmailAsync(Input.Email);
+                    if (user != null)
+                    {
+                        // Get the user's roles
+                        var roles = await _userManager.GetRolesAsync(user);
+
+                        // Redirect based on role
+                        if (roles.Contains("Lecturer"))
+                        {
+                            return LocalRedirect(Url.Content("~/Lecturer/Claims"));
+                        }
+                        else if (roles.Contains("Coordinator"))
+                        {
+                            return LocalRedirect(Url.Content("~/Coordinator/Index"));
+                        }
+                        else if (roles.Contains("Manager"))
+                        {
+                            return LocalRedirect(Url.Content("~/Manager/Index"));
+                        }
+                    }
+
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
