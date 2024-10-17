@@ -1,6 +1,71 @@
 ﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #261132;
+    color: white;
+}
 
+/* Navbar Styling */
+.bg-dark-purple {
+    background-color: #261132;
+    border-bottom: 2px solid #534B58;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover {
+        color: #f1c40f; /* Complementary color */
+    }
+
+/* Side Navigation Styling */
+#sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #534B58;
+    position: fixed;
+}
+
+    #sidebar .nav-link {
+        color: #ffffff;
+    }
+
+        #sidebar .nav-link:hover {
+            background-color: #f1c40f; /* Complementary highlight */
+            border-radius: 5px;
+        }
+
+/* Main Content Styling */
+#content {
+    margin-left: 250px; /* Equal to sidebar width */
+    padding: 20px;
+    background-color: #261132;
+    color: white;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #534B58;
+    color: white;
+    text-align: center;
+}
+
+    .footer a {
+        color: #ffffff;
+    }
+
+        .footer a:hover {
+            color: #f1c40f;
+        }
+
+.navbar-dark .navbar-brand {
+    color: #000;
+}
+
+/*
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -46,3 +111,4 @@ button.accept-policy {
   white-space: nowrap;
   line-height: 60px;
 }
+*/

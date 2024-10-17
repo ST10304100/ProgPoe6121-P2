@@ -5,75 +5,44 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<h1 class="page-title">@ViewData["Title"]</h1>
+<div class="row justify-content-center" style="margin-bottom: 106px;">
     <div class="col-md-4">
-        <section>
+        <section class="login-section">
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
+                <h2 class="section-title">Log in to your account</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                     <label asp-for="Input.Email" class="form-label">Email</label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating mb-3">
                     <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
                     <label asp-for="Input.Password" class="form-label">Password</label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+
                 <div class="checkbox mb-3">
-                    <label asp-for="Input.RememberMe" class="form-label">
+                    <label asp-for="Input.RememberMe" class="form-label remember-me-label">
                         <input class="form-check-input" asp-for="Input.RememberMe" />
-                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        Remember me
                     </label>
                 </div>
+
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="btn custom-btn w-100">Log in</button>
                 </div>
-                <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
-                    </p>
+
+                <div class="additional-links mt-3">
+                    <p><a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a></p>
+                    <p><a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></p>
+                    <p><a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a></p>
                 </div>
             </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Use another service to log in.</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">article
-                            about setting up this ASP.NET application to support logging in via external services</a>.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
         </section>
     </div>
 </div>
@@ -81,3 +50,90 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .hide-nav{
+        display: none;
+
+    }
+
+    #content[b-qxnb4vtdyy] {
+        margin-left: 0px;
+    }
+
+    #sidebar{
+        display: none;
+    }
+
+    body {
+        background-color: #261132; /* Dark purple background */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .page-title {
+        text-align: center;
+        color: #f1c40f; /* Yellow color for title */
+        margin-bottom: 30px;
+    }
+
+    .login-section {
+        background-color: #534B58; /* Grey background */
+        padding: 20px;
+        border-radius: 10px;
+        color: #ffffff; /* White text */
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+        color: #f1c40f; /* Yellow for section title */
+        margin-bottom: 20px;
+    }
+
+    .form-floating .form-label {
+        color: #ffffff; /* White labels */
+    }
+
+    .form-control {
+        background-color: #261132; /* Dark purple input fields */
+        color: #ffffff; /* White text */
+        border: 1px solid #f1c40f; /* Yellow border */
+    }
+
+        .form-control::placeholder {
+            color: #b3b3b3; /* Light grey placeholder text */
+        }
+
+        .form-control:focus {
+            border-color: #f1c40f; /* Yellow border on focus */
+            box-shadow: 0 0 5px rgba(241, 196, 15, 0.5); /* Yellow glow */
+        }
+
+    .remember-me-label {
+        color: #ffffff; /* White text for "Remember me" */
+    }
+
+    .custom-btn {
+        background-color: #f1c40f; /* Yellow button */
+        color: #261132; /* Dark purple text */
+        border: none;
+        font-weight: bold;
+        padding: 10px 0;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .custom-btn:hover {
+            background-color: #ffffff; /* White on hover */
+            color: #261132; /* Dark purple text on hover */
+        }
+
+    .additional-links a {
+        color: #f1c40f; /* Yellow links */
+        text-decoration: none;
+    }
+
+        .additional-links a:hover {
+            text-decoration: underline;
+            color: #ffffff; /* White on hover */
+        }
+</style>

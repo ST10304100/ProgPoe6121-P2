@@ -8,8 +8,8 @@
     <div class="register-box">
         <section class="register-section">
             <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                <h1>Register</h1>
-                <h2>Enter your details to create a New Account</h2>
+                <h1 class="register-title">Register</h1>
+                <h2 class="register-subtitle">Create a New Account</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
@@ -50,7 +50,7 @@
                     <span asp-validation-for="Input.Role" class="text-danger"></span>
                 </div>
 
-                <button id="registerSubmit" type="submit" class="btn btn-register">Register</button>
+                <button id="registerSubmit" type="submit" class="btn btn-register w-100">Register</button>
             </form>
         </section>
     </div>
@@ -59,3 +59,98 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+
+<style>
+    .hide-nav {
+        display: none;
+    }
+
+    #content[b-qxnb4vtdyy] {
+        margin-left: 0px;
+    }
+
+    #sidebar {
+        display: none;
+    }
+
+
+    body {
+        background-color: #261132; /* Dark purple background */
+        font-family: 'Poppins', sans-serif;
+        color: #ffffff; /* Default white text */
+    }
+
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .register-box {
+        background-color: #534B58; /* Grey background */
+        padding: 40px;
+        border-radius: 10px;
+        width: 100%;
+        max-width: 500px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .register-title {
+        color: #f1c40f; /* Yellow title */
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .register-subtitle {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .form-floating .form-label {
+        color: #ffffff; /* White labels */
+    }
+
+    .form-control {
+        background-color: #261132; /* Dark purple inputs */
+        color: #ffffff; /* White text */
+        border: 1px solid #f1c40f; /* Yellow border */
+    }
+
+        .form-control::placeholder {
+            color: #b3b3b3; /* Light grey placeholder */
+        }
+
+        .form-control:focus {
+            border-color: #f1c40f; /* Yellow focus */
+            box-shadow: 0 0 5px rgba(241, 196, 15, 0.5); /* Yellow glow */
+        }
+
+    .btn-register {
+        background-color: #f1c40f; /* Yellow button */
+        color: #261132; /* Dark purple text */
+        font-weight: bold;
+        padding: 10px 0;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-register:hover {
+            background-color: #ffffff; /* White on hover */
+            color: #261132; /* Dark purple text on hover */
+        }
+
+    .form-select {
+        background-color: #261132; /* Dark purple dropdown */
+        color: #ffffff; /* White text */
+        border: 1px solid #f1c40f; /* Yellow border */
+    }
+
+        .form-select:focus {
+            border-color: #f1c40f;
+            box-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+        }
+</style>
