@@ -138,6 +138,14 @@ namespace PROG_PART_2.Areas.Identity.Pages.Account
                         {
                             return LocalRedirect(Url.Content("~/Manager/Index"));
                         }
+                        else if (roles.Contains("Default"))
+                        {
+                            return LocalRedirect(Url.Content("~/DefaultUser/Index"));
+                        }
+                        else if (roles.Contains("HR Manager"))
+                        {
+                            return LocalRedirect(Url.Content("~/Hr/Dashboard"));
+                        }
                     }
 
                     return LocalRedirect(returnUrl);
