@@ -5,41 +5,221 @@
 }
 
 <div class="container-claims">
-    <h2 class="claim-title">Submit Your Claim</h2>
-
-    <form asp-action="Create" enctype="multipart/form-data" method="post">
-        <div class="form-group">
-            <label asp-for="HoursWorked" class="form-label"></label>
-            <input asp-for="HoursWorked" class="form-control" required />
-            <span asp-validation-for="HoursWorked" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="HourlyRate" class="form-label"></label>
-            <input asp-for="HourlyRate" class="form-control" required />
-            <span asp-validation-for="HourlyRate" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Notes" class="form-label"></label>
-            <textarea asp-for="Notes" class="form-control" rows="4" placeholder="Add any additional notes..."></textarea>
-            <span asp-validation-for="Notes" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label for="SupportingDocuments" class="form-label" style="@(ViewBag.InvalidFile != null && (bool)ViewBag.InvalidFile ? "color: red;" : "color: #ffffff;")">
-                Supporting Documents (PDF only, max 15MB)
-            </label>
-            <input type="file" name="SupportingDocuments" class="form-control" multiple required />
-            <span asp-validation-for="SupportingDocuments" class="text-danger"></span>
-        </div>
-
-        <button type="submit" class="btn-claims"><i class="fa-solid fa-upload"></i> Submit Claim</button>
-    </form>
+<h2>Submit Your Claim</h2>
+ 
+    <form asp-action="Create" enctype="multipart/form-data" method="post" id="claimForm">
+<div class="form-group">
+<label asp-for="HoursWorked"></label>
+<input asp-for="HoursWorked" class="form-control" required />
+<span asp-validation-for="HoursWorked" class="text-danger"></span>
 </div>
-
+ 
+        <div class="form-group">
+<label asp-for="HourlyRate"></label>
+<input asp-for="HourlyRate" class="form-control" required />
+<span asp-validation-for="HourlyRate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="StartDate"></label>
+<input asp-for="StartDate" type="date" class="form-control" required />
+<span asp-validation-for="StartDate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="EndDate"></label>
+<input asp-for="EndDate" type="date" class="form-control" required />
+<span asp-validation-for="EndDate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="Notes"></label>
+<textarea asp-for="Notes" class="form-control" rows="4" placeholder="Add any additional notes..."></textarea>
+<span asp-validation-for="Notes" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label for="SupportingDocuments" style="@(ViewBag.InvalidFile != null && (bool)ViewBag.InvalidFile ? "color: red;" : "color: black;")">Supporting Documents (PDF only, max 15MB)</label>
+<input type="file" name="SupportingDocuments" id="SupportingDocuments" class="form-control" multiple required />
+<span asp-validation-for="SupportingDocuments" class="text-danger"></span>
+</div>
+ 
+        <button type="submit" class="btn-claims btn-primary"><i class="fa-solid fa-upload"></i> Submit Claim</button>
+</form>
+</div>
+ 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function () {
+            // File validation
+            $('#SupportingDocuments').on('change', function () {
+                let maxFileSize = 15 * 1024 * 1024; // 15MB
+                let valid = true;
+ 
+                $.each(this.files, function (i, file) {
+                    if (file.type !== 'application/pdf') {
+                        alert('Only PDF files are allowed.');
+                        valid = false;
+                        return false; // Exit loop
+                    }
+                    if (file.size > maxFileSize) {
+                        alert('File size cannot exceed 15MB.');
+                        valid = false;
+                        return false;
+                    }
+                });
+ 
+                if (!valid) {
+                    $(this).val('');
+                }
+            });
+ 
+            // Date range validation
+            $('#claimForm').on('submit', function (e) {
+                const startDate = new Date($('#StartDate').val());
+                const endDate = new Date($('#EndDate').val());
+                const today = new Date();
+ 
+                // Set the first and last day of the current and previous months
+                const firstDayCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                const lastDayCurrentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Last day of current month
+                const firstDayPreviousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                const lastDayPreviousMonth = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of previous month
+ 
+                // Calculate the difference in days between start and end date
+                const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+ 
+                // Check if start and end dates are within allowed range (current or previous month) and within 31 days
+                if (
+                    !(
+                        (startDate >= firstDayCurrentMonth && endDate <= lastDayCurrentMonth) ||
+                        (startDate >= firstDayPreviousMonth && endDate <= lastDayPreviousMonth)
+                    ) || daysDifference > 32
+                ) {
+                    alert('The date range must be within the current or previous month and cannot exceed 30 days.');
+                    e.preventDefault();
+                }
+            });
+ 
+            // Check for existing claim for the month
+        @if (ViewData["ClaimExists"] != null && (bool)ViewData["ClaimExists"])
+        {
+<text>
+                    alert("You have already submitted a claim for this month.");
+</text>
+        }
+                });
+</script>
+}<div class="container-claims">
+<h2>Submit Your Claim</h2>
+ 
+    <form asp-action="Create" enctype="multipart/form-data" method="post" id="claimForm">
+<div class="form-group">
+<label asp-for="HoursWorked"></label>
+<input asp-for="HoursWorked" class="form-control" required />
+<span asp-validation-for="HoursWorked" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="HourlyRate"></label>
+<input asp-for="HourlyRate" class="form-control" required />
+<span asp-validation-for="HourlyRate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="StartDate"></label>
+<input asp-for="StartDate" type="date" class="form-control" required />
+<span asp-validation-for="StartDate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="EndDate"></label>
+<input asp-for="EndDate" type="date" class="form-control" required />
+<span asp-validation-for="EndDate" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label asp-for="Notes"></label>
+<textarea asp-for="Notes" class="form-control" rows="4" placeholder="Add any additional notes..."></textarea>
+<span asp-validation-for="Notes" class="text-danger"></span>
+</div>
+ 
+        <div class="form-group">
+<label for="SupportingDocuments" style="@(ViewBag.InvalidFile != null && (bool)ViewBag.InvalidFile ? "color: red;" : "color: black;")">Supporting Documents (PDF only, max 15MB)</label>
+<input type="file" name="SupportingDocuments" id="SupportingDocuments" class="form-control" multiple required />
+<span asp-validation-for="SupportingDocuments" class="text-danger"></span>
+</div>
+ 
+        <button type="submit" class="btn-claims btn-primary"><i class="fa-solid fa-upload"></i> Submit Claim</button>
+</form>
+</div>
+ 
+@section Scripts {
+<partial name="_ValidationScriptsPartial" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+        $(document).ready(function () {
+            // File validation
+            $('#SupportingDocuments').on('change', function () {
+                let maxFileSize = 15 * 1024 * 1024; // 15MB
+                let valid = true;
+ 
+                $.each(this.files, function (i, file) {
+                    if (file.type !== 'application/pdf') {
+                        alert('Only PDF files are allowed.');
+                        valid = false;
+                        return false; // Exit loop
+                    }
+                    if (file.size > maxFileSize) {
+                        alert('File size cannot exceed 15MB.');
+                        valid = false;
+                        return false;
+                    }
+                });
+ 
+                if (!valid) {
+                    $(this).val('');
+                }
+            });
+ 
+            // Date range validation
+            $('#claimForm').on('submit', function (e) {
+                const startDate = new Date($('#StartDate').val());
+                const endDate = new Date($('#EndDate').val());
+                const today = new Date();
+ 
+                // Set the first and last day of the current and previous months
+                const firstDayCurrentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+                const lastDayCurrentMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // Last day of current month
+                const firstDayPreviousMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+                const lastDayPreviousMonth = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of previous month
+ 
+                // Calculate the difference in days between start and end date
+                const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+ 
+                // Check if start and end dates are within allowed range (current or previous month) and within 31 days
+                if (
+                    !(
+                        (startDate >= firstDayCurrentMonth && endDate <= lastDayCurrentMonth) ||
+                        (startDate >= firstDayPreviousMonth && endDate <= lastDayPreviousMonth)
+                    ) || daysDifference > 32
+                ) {
+                    alert('The date range must be within the current or previous month and cannot exceed 30 days.');
+                    e.preventDefault();
+                }
+            });
+ 
+            // Check for existing claim for the month
+        @if (ViewData["ClaimExists"] != null && (bool)ViewData["ClaimExists"])
+        {
+<text>
+                    alert("You have already submitted a claim for this month.");
+</text>
+        }
+                });
+</script>
 }
 
 <style>
